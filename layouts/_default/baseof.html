@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{ $socialTitle := .Title }}
+    {{ with .Params.openGraphTitle }}
+    {{ $socialTitle = . }}
+    {{ end }}
+
+    {{ $description := .Summary }}
+    {{ with .Description }}
+    {{ $description = . }}
+    {{ end }}
+
+    {{ $socialImage := .Site.Params.opengraph | absURL }}
+    {{ $filename := print .File.BaseFileName ".jpg" }}
+    {{ $filepath := path.Join .File.Dir .File.BaseFileName $filename }}
+    {{ if os.FileExists $filepath }}
+    {{ $socialImage = urls.JoinPath .Permalink $filename }}
+    {{ end }}
+
+    <meta name="description" content="{{ $description }}">
+    <meta name="author" content="{{ .Site.Copyright }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}" />
+    <meta property="og:title" content=" {{ $socialTitle }}" />
+    <meta property="og:description" content="{{ $description }}" />
+    <meta property="og:image" content="{{ $socialImage }}" />
+    <meta property="twitter:url" content="{{ .Permalink }}">
+    <meta name="twitter:card" content="{{ if .IsPage }}summary_large_image{{ else }}summary{{ end }}" />
+    <meta name="twitter:title" content="{{ $socialTitle }}" />
+    <meta name="twitter:description" content="{{ $description }}" />
+    <meta name="twitter:image" content="{{ $socialImage }}" />
+
+    {{ $css := resources.Get "css/main.css" | minify }}
+
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+    <link rel="icon" href="{{ site.Params.faviconICO | absURL }}" type="image/x-icon" sizes="any">
+    <link rel="icon" href="{{ site.Params.faviconSVG | absURL }}" type="image/svg+xml">
+    <title>{{ site.Title }}{{ if .IsHome }}{{ else }} | {{ if .Title }}{{ .Title }}{{ end }}{{ end }}</title>
+</head>
+
+<body>
+    <nav>
+        {{ range .Site.Menus.nav }}<a href="{{ .URL | safeURL }}" {{ if .Identifier }} id="{{ .Identifier }}" {{ end
+            }}{{ if strings.HasPrefix .URL "http" }} target="_blank" rel="noopener noreferrer" {{ end }}>{{ .Name
+            }}</a>{{ end }}
+    </nav>
+    <main>
+        {{ block "page" . }}{{ end }}
+    </main>
+    <aside>
+    </aside>
+</body>
+
+</html>

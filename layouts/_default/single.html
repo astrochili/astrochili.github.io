@@ -1,0 +1,11 @@
+{{ define "page" }}
+<article>
+    <header>
+        <h1>{{ .Title }}</h1>
+        {{ if .Date }}
+        <h4>{{ .Date.Format "2006" }}</h4>
+        {{ end }}
+    </header>
+    {{ .Content }}
+</article>
+{{ end }}
