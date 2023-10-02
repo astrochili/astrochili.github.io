@@ -1,0 +1,41 @@
+baseurl = 'https://romansilin.com/'
+title = 'Roman Silin'
+languageCode = 'en-us'
+copyright = 'Roman Silin'
+
+[params]
+    faviconICO = '/favicon.ico'
+    faviconSVG = '/images/favicon.svg'
+    opengraph = '/images/opengraph.png'
+
+[menu]
+[[menu.nav]]
+    identifier = 'logo'
+    name = 'Home'
+    pageRef = '/'
+    weight = 1
+[[menu.nav]]
+    name = 'Now'
+    pageRef = '/now'
+    weight = 2
+[[menu.nav]]
+    name = 'Projects'
+    pageRef = '/projects'
+    weight = 3
+[[menu.nav]]
+    name = 'Nachos'
+    url = 'https://astronachos.com/'
+    weight = 4
+
+# To disable categories and tags
+[taxonomies]
+
+# To disable xml files
+[outputs]
+home = ['html']
+page = ['html']
+section = ['html']
+
+# To minify HTML
+[minify]
+  minifyOutput = true
